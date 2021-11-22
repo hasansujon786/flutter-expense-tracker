@@ -11,12 +11,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Expense Tracker',
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
+        fontFamily: 'quicksand',
+        appBarTheme: const AppBarTheme(
+          centerTitle: true,
+          titleTextStyle: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+            fontFamily: 'quicksand',
+          ),
+        ),
       ),
-      home: const HomeScreen(title: 'EXT'),
+      home: const HomeScreen(title: 'Expense Tracker'),
     );
   }
 }
-
