@@ -1,3 +1,4 @@
+import 'package:expense_tracker/widgets/chart_weekdays.dart';
 import 'package:expense_tracker/widgets/transaction_list.dart';
 import 'package:expense_tracker/widgets/new_transaction.dart';
 import 'package:expense_tracker/models/transaction.dart';
@@ -56,10 +57,24 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Transaction> _userTransactions = [
     Transaction(
-        id: 't1', title: 'new show', amount: 70.0, date: DateTime.now()),
+      id: 't1',
+      title: 'new show',
+      amount: 70.0,
+      date: DateTime.now().subtract(const Duration(days: 1)),
+    ),
     Transaction(
-        id: 't2', title: 'Weekly Groceries', amount: 50.0, date: DateTime.now())
+      id: 't2',
+      title: 'Weekly Groceries',
+      amount: 50.0,
+      date: DateTime.now().subtract(const Duration(days: 1)),
+    )
   ];
+
+  List<Transaction> get lastWeekTransactions {
+    return _userTransactions.where((tx) {
+      return tx.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
+    }).toList();
+  }
 
   void _addNewTransaction(String title, double amount) {
     final newTx = Transaction(
@@ -84,18 +99,18 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Card(
-              elevation: 3,
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                child: const Text('hello'),
-                width: double.infinity,
-                height: 100,
-              ),
-            ),
-            TransactionList(
-              transactions: _userTransactions,
-            )
+            ChartWeekdays(lastWeekTransactions: lastWeekTransactions),
+            _userTransactions.isEmpty
+                ? const SizedBox(
+                    height: 200,
+                    child: Center(
+                      child: Text(
+                        'no items',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  )
+                : TransactionList(transactions: _userTransactions),
           ],
         ),
       ),
@@ -109,4 +124,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
