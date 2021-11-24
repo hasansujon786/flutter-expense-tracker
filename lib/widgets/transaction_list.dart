@@ -29,40 +29,23 @@ class TransactionListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-          decoration: BoxDecoration(
-            border: Border.all(
-              width: 2,
-              color: Theme.of(context).primaryColor,
-            ),
-          ),
-          child: Text(
-            '\$${transaction.amount.toStringAsFixed(2)}',
-            style: TextStyle(
-                color: Theme.of(context).primaryColor,
-                fontSize: 20,
-                fontWeight: FontWeight.bold),
-          ),
+    return ListTile(
+      horizontalTitleGap: 8,
+      leading: CircleAvatar(
+        radius: 30.0,
+        child: Padding(
+          padding: const EdgeInsets.all(6.0),
+          child: FittedBox(child: Text('\$${transaction.amount}')),
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              transaction.title,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            Text(
-              dateFormater.format(transaction.date),
-              style: TextStyle(color: Colors.grey.shade500),
-            )
-          ],
-        )
-      ],
+      ),
+      title: Text(
+        transaction.title,
+        style: Theme.of(context).textTheme.headline6,
+      ),
+      subtitle: Text(
+        dateFormater.format(transaction.date),
+        style: Theme.of(context).textTheme.caption,
+      ),
     );
   }
 }

@@ -10,22 +10,25 @@ class ChartWeekdays extends StatelessWidget {
   final List<Transaction> lastWeekTransactions;
 
   List<Map<String, Object>> get groupedTransactionValues {
-    return List.generate(7, (index) {
-      final weekDay = DateTime.now().subtract(Duration(days: index));
-      double totalsum = 0.0;
-      for (var i = 0; i < lastWeekTransactions.length; i++) {
-        if (lastWeekTransactions[i].date.day == weekDay.day &&
-            lastWeekTransactions[i].date.month == weekDay.month &&
-            lastWeekTransactions[i].date.year == weekDay.year) {
-          totalsum += lastWeekTransactions[i].amount;
+    return List.generate(
+      7,
+      (index) {
+        final weekDay = DateTime.now().subtract(Duration(days: index));
+        double totalsum = 0.0;
+        for (var i = 0; i < lastWeekTransactions.length; i++) {
+          if (lastWeekTransactions[i].date.day == weekDay.day &&
+              lastWeekTransactions[i].date.month == weekDay.month &&
+              lastWeekTransactions[i].date.year == weekDay.year) {
+            totalsum += lastWeekTransactions[i].amount;
+          }
         }
-      }
 
-      return {
-        'day': DateFormat.E().format(weekDay),
-        'totalSpendingOfDay': totalsum
-      };
-    });
+        return {
+          'day': DateFormat.E().format(weekDay),
+          'totalSpendingOfDay': totalsum
+        };
+      },
+    ).reversed.toList();
   }
 
   double get totalSpendingOfWeek {
@@ -52,7 +55,7 @@ class ChartWeekdays extends StatelessWidget {
           }).toList(),
         ),
         width: double.infinity,
-        height: 180,
+        height: 160,
       ),
     );
   }
