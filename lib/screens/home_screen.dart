@@ -1,8 +1,9 @@
-import 'package:expense_tracker/widgets/chart_weekdays.dart';
-import 'package:expense_tracker/widgets/transaction_list.dart';
-import 'package:expense_tracker/widgets/new_transaction.dart';
-import 'package:expense_tracker/models/transaction.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/chart_weekdays.dart';
+import '../widgets/transaction_list.dart';
+import '../widgets/new_transaction.dart';
+import '../models/transaction.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key, required this.title}) : super(key: key);

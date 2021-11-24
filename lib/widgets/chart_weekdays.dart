@@ -1,6 +1,8 @@
-import 'package:expense_tracker/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import '../models/transaction.dart';
+import './chart_bar.dart';
 
 class ChartWeekdays extends StatelessWidget {
   const ChartWeekdays({Key? key, required this.lastWeekTransactions})
@@ -19,8 +21,15 @@ class ChartWeekdays extends StatelessWidget {
         }
       }
 
-      return {'day': DateFormat.E().format(weekDay), 'total': totalsum};
+      return {
+        'day': DateFormat.E().format(weekDay),
+        'totalSpendingOfDay': totalsum
+      };
     });
+  }
+
+  double get totalSpendingOfWeek {
+    return lastWeekTransactions.fold(0, (sum, item) => sum + item.amount);
   }
 
   @override
@@ -28,19 +37,22 @@ class ChartWeekdays extends StatelessWidget {
     return Card(
       elevation: 3,
       child: Container(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 8),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          /* crossAxisAlignment: CrossAxisAlignment.center, */
           children: groupedTransactionValues.map((item) {
-            return Column(
-              children: [
-                Text('${item['day']}'),
-                Text('${item['total']}'),
-              ],
-            );
+            return ChartBar(
+                day: item['day'],
+                amount: item['totalSpendingOfDay'],
+                spendingPercentOfWeek: totalSpendingOfWeek == 0.0
+                    ? 0.0
+                    : (item['totalSpendingOfDay'] as double) /
+                        totalSpendingOfWeek);
           }).toList(),
         ),
         width: double.infinity,
-        height: 100,
+        height: 180,
       ),
     );
   }
