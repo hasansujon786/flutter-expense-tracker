@@ -90,6 +90,12 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((tx) => tx.id == id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,7 +117,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   )
-                : TransactionList(transactions: _userTransactions),
+                : TransactionList(
+                    transactions: _userTransactions,
+                    onDeleteTransaction: _deleteTransaction,
+                  ),
           ],
         ),
       ),

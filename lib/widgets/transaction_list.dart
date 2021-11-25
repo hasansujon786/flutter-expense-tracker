@@ -4,9 +4,11 @@ import 'package:intl/intl.dart';
 import '../models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
-  const TransactionList({Key? key, required this.transactions})
+  const TransactionList(
+      {Key? key, required this.transactions, required this.onDeleteTransaction})
       : super(key: key);
   final List<Transaction> transactions;
+  final Function onDeleteTransaction;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +16,10 @@ class TransactionList extends StatelessWidget {
       height: 200,
       child: ListView.builder(
         itemBuilder: (ctx, index) {
-          return TransactionListItem(transaction: transactions[index]);
+          return TransactionListItem(
+            transaction: transactions[index],
+            onDeleteTransaction: onDeleteTransaction,
+          );
         },
         itemCount: transactions.length,
       ),
@@ -23,8 +28,11 @@ class TransactionList extends StatelessWidget {
 }
 
 class TransactionListItem extends StatelessWidget {
-  TransactionListItem({Key? key, required this.transaction}) : super(key: key);
+  TransactionListItem(
+      {Key? key, required this.transaction, required this.onDeleteTransaction})
+      : super(key: key);
   final Transaction transaction;
+  final Function onDeleteTransaction;
   final dateFormater = DateFormat().add_yMMMd();
 
   @override
@@ -45,6 +53,10 @@ class TransactionListItem extends StatelessWidget {
       subtitle: Text(
         dateFormater.format(transaction.date),
         style: Theme.of(context).textTheme.caption,
+      ),
+      trailing: IconButton(
+        icon: const Icon(Icons.delete),
+        onPressed: () => onDeleteTransaction(transaction.id),
       ),
     );
   }
