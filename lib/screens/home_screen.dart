@@ -77,10 +77,10 @@ class _HomeScreenState extends State<HomeScreen> {
     }).toList();
   }
 
-  void _addNewTransaction(String title, double amount) {
+  void _addNewTransaction(String title, double amount, DateTime date) {
     final newTx = Transaction(
       id: DateTime.now().toString(),
-      date: DateTime.now(),
+      date: date,
       title: title,
       amount: amount,
     );

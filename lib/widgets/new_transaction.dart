@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewTransaction extends StatefulWidget {
   const NewTransaction(
@@ -14,17 +15,34 @@ class NewTransaction extends StatefulWidget {
 }
 
 class _NewTransactionState extends State<NewTransaction> {
-  final titleConroller = TextEditingController();
-  final amountConroller = TextEditingController();
+  final _titleConroller = TextEditingController();
+  final _amountConroller = TextEditingController();
+  DateTime _choosenDate = DateTime.now();
 
-  void submitData() {
-    final title = titleConroller.text;
-    final amount = double.parse(amountConroller.text);
+  void _onSubmitData() {
+    if (_titleConroller.text.isEmpty || _amountConroller.text.isEmpty) return;
+    final title = _titleConroller.text;
+    final amount = double.parse(_amountConroller.text);
     if (title.isEmpty || amount <= 0) {
       return;
     }
-    widget.addNewTransaction(title, amount);
+    widget.addNewTransaction(title, amount, _choosenDate);
     widget.onCloseModalBottomSheet();
+  }
+
+  void _onShowDatePicker() {
+    final DateTime today = DateTime.now();
+    showDatePicker(
+      context: context,
+      initialDate: today,
+      firstDate: DateTime(today.year),
+      lastDate: today,
+    ).then((pickedDate) {
+      if (pickedDate == null) return;
+      setState(() {
+        _choosenDate = pickedDate;
+      });
+    });
   }
 
   @override
@@ -39,8 +57,8 @@ class _NewTransactionState extends State<NewTransaction> {
               border: OutlineInputBorder(),
               labelText: 'What is the reason of your expanse?',
             ),
-            controller: titleConroller,
-            onSubmitted: (_) => submitData(),
+            controller: _titleConroller,
+            onSubmitted: (_) => _onSubmitData(),
           ),
           const SizedBox(height: 8),
           TextField(
@@ -48,13 +66,37 @@ class _NewTransactionState extends State<NewTransaction> {
               border: OutlineInputBorder(),
               labelText: 'What is the amount of your expanse?',
             ),
-            controller: amountConroller,
+            controller: _amountConroller,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            onSubmitted: (_) => submitData(),
+            onSubmitted: (_) => _onSubmitData(),
           ),
-          TextButton(
-            child: const Text('Add Transaction'),
-            onPressed: submitData,
+          const SizedBox(height: 6),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Icon(
+                Icons.date_range,
+                size: 28,
+              ),
+              const SizedBox(width: 6),
+              Expanded(
+                child: Text(
+                  DateFormat.yMEd().format(_choosenDate),
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
+              ),
+              TextButton(
+                child: const Text('Change Date'),
+                onPressed: _onShowDatePicker,
+              )
+            ],
+          ),
+          const SizedBox(height: 32),
+          Center(
+            child: ElevatedButton(
+              child: const Text('Add Transaction'),
+              onPressed: _onSubmitData,
+            ),
           )
         ],
       ),
