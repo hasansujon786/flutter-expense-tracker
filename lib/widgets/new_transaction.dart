@@ -58,7 +58,7 @@ class _NewTransactionState extends State<NewTransaction> {
               labelText: 'What is the reason of your expanse?',
             ),
             controller: _titleConroller,
-            onSubmitted: (_) => _onSubmitData(),
+            /* onSubmitted: (_) => _onSubmitData(), */
           ),
           const SizedBox(height: 8),
           TextField(
@@ -68,7 +68,7 @@ class _NewTransactionState extends State<NewTransaction> {
             ),
             controller: _amountConroller,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            onSubmitted: (_) => _onSubmitData(),
+            /* onSubmitted: (_) => _onSubmitData(), */
           ),
           const SizedBox(height: 6),
           Row(
@@ -94,10 +94,21 @@ class _NewTransactionState extends State<NewTransaction> {
           const SizedBox(height: 32),
           Center(
             child: ElevatedButton(
-              child: const Text('Add Transaction'),
+              child: const Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Text(
+                  'Add Transaction',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
               onPressed: _onSubmitData,
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
             ),
-          )
+          ),
         ],
       ),
     );

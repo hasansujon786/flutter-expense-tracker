@@ -40,6 +40,7 @@ class ChartWeekdays extends StatelessWidget {
     return Card(
       elevation: 3,
       child: Container(
+        width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 8),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,8 +55,6 @@ class ChartWeekdays extends StatelessWidget {
                         totalSpendingOfWeek);
           }).toList(),
         ),
-        width: double.infinity,
-        height: 160,
       ),
     );
   }

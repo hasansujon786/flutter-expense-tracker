@@ -12,17 +12,14 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 200,
-      child: ListView.builder(
-        itemBuilder: (ctx, index) {
-          return TransactionListItem(
-            transaction: transactions[index],
-            onDeleteTransaction: onDeleteTransaction,
-          );
-        },
-        itemCount: transactions.length,
-      ),
+    return ListView.builder(
+      itemBuilder: (ctx, index) {
+        return TransactionListItem(
+          transaction: transactions[index],
+          onDeleteTransaction: onDeleteTransaction,
+        );
+      },
+      itemCount: transactions.length,
     );
   }
 }

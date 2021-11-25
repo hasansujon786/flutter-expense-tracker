@@ -98,15 +98,23 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: Text(widget.title),
+    );
+    final media = MediaQuery.of(context);
+    final screenHeight =
+        media.size.height - appBar.preferredSize.height - media.padding.top;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ChartWeekdays(lastWeekTransactions: lastWeekTransactions),
+            SizedBox(
+                height: screenHeight * 0.3,
+                child:
+                    ChartWeekdays(lastWeekTransactions: lastWeekTransactions)),
             _userTransactions.isEmpty
                 ? const SizedBox(
                     height: 200,
@@ -117,9 +125,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   )
-                : TransactionList(
-                    transactions: _userTransactions,
-                    onDeleteTransaction: _deleteTransaction,
+                : SizedBox(
+                    height: screenHeight * 0.7,
+                    child: TransactionList(
+                      transactions: _userTransactions,
+                      onDeleteTransaction: _deleteTransaction,
+                    ),
                   ),
           ],
         ),
