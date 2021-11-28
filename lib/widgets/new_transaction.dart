@@ -93,18 +93,20 @@ class _NewTransactionState extends State<NewTransaction> {
           ),
           const SizedBox(height: 32),
           Center(
-            child: ElevatedButton(
-              child: const Padding(
-                padding: EdgeInsets.all(15.0),
-                child: Text(
-                  'Add Transaction',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+            child: SizedBox(
+              width: 240,
+              height: 50,
+              child: ElevatedButton(
+                child: const Text(
+                  'Add transaction',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
-              ),
-              onPressed: _onSubmitData,
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                onPressed: _onSubmitData,
+                style: ElevatedButton.styleFrom(
+                  elevation: 1,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
                 ),
               ),
             ),
