@@ -38,6 +38,9 @@ class TransactionListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onLongPress: () {
+        Navigator.of(context).pushNamed('/foo');
+      },
       horizontalTitleGap: 8,
       leading: CircleAvatar(
         radius: 30.0,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import './screens/home_screen.dart';
+import './screens/sliver_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'Expense Tracker',
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
+        /* visualDensity: VisualDensity.adaptivePlatformDensity, */
         fontFamily: 'quicksand',
         appBarTheme: const AppBarTheme(
           centerTitle: true,
@@ -28,7 +30,10 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const HomeScreen(title: 'Expense Tracker'),
+      routes: {
+        '/': (ctx) => const HomeScreen(title: 'Expense Tracker'),
+        '/foo': (ctx) => const SliverScreen(),
+      },
     );
   }
 }
