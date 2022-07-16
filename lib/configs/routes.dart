@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../pages/pages.dart';
+import 'constants.dart';
 
-// {> routes = const <String, WidgetBuilder>{}}
 Map<String, Widget Function(BuildContext)> appRoutes = {
-  '/': (ctx) => const HomePage(title: 'Expense Tracker'),
-  // '/foo': (ctx) => const SliverScreen(),
+  '/': (ctx) => const HomeView(title: Constants.appName),
+  TransactionDetailsView.routeName: (ctx) => const TransactionDetailsView(title: 'Expanse Details'),
 };

@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 
-import '../../../widgets/widgets.dart';
+import '../widgets/widgets.dart';
 import '../../../models/models.dart';
+import '../../../configs/configs.dart';
 
 const Color _bg = Colors.blue;
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.title}) : super(key: key);
+class HomeView extends StatefulWidget {
+  const HomeView({Key? key, required this.title}) : super(key: key);
   final String title;
 
+  static const routeName = '/';
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeViewState extends State<HomeView> {
   final List<Transaction> _userTransactions = demoTransactions;
 
   void _addNewTransaction(String title, double amount, DateTime date) {
@@ -25,7 +27,7 @@ class _HomePageState extends State<HomePage> {
     );
 
     setState(() {
-      _userTransactions.add(newTx);
+      _userTransactions.insert(0, newTx);
     });
   }
 
@@ -62,13 +64,7 @@ class _HomePageState extends State<HomePage> {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const <Widget>[
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text(
-              'My Digital',
-              style: TextStyle(color: Colors.white, fontSize: 20.0),
-            ),
-          ),
+          Padding(padding: EdgeInsets.all(16.0), child: Text(Constants.appName)),
         ],
       ),
       expandedHeight: 230.0,
@@ -78,7 +74,7 @@ class _HomePageState extends State<HomePage> {
       flexibleSpace: FlexibleSpaceBar(
         background: Container(
           color: _bg,
-          child: const Center(child: Text('fooo')),
+          // child: const Center(child: Text('fooo')),
         ),
       ),
     );
@@ -114,6 +110,7 @@ class ListTopRCorner extends StatelessWidget {
           Container(
             padding: const EdgeInsets.fromLTRB(24, 16, 24, 2),
             width: double.infinity,
+            // height: 30,
             child: const Text('Today'),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -122,11 +119,9 @@ class ListTopRCorner extends StatelessWidget {
                 topRight: Radius.circular(height),
               ),
             ),
-            // height: 30,
           ),
         ],
       ),
     );
   }
 }
-
