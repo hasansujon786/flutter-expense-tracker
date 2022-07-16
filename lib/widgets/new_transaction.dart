@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class NewTransaction extends StatefulWidget {
-  const NewTransaction(
+class NewTransactionInput extends StatefulWidget {
+  const NewTransactionInput(
       {Key? key,
       required this.addNewTransaction,
       required this.onCloseModalBottomSheet})
@@ -11,10 +11,10 @@ class NewTransaction extends StatefulWidget {
   final Function onCloseModalBottomSheet;
 
   @override
-  State<NewTransaction> createState() => _NewTransactionState();
+  State<NewTransactionInput> createState() => _NewTransactionInputState();
 }
 
-class _NewTransactionState extends State<NewTransaction> {
+class _NewTransactionInputState extends State<NewTransactionInput> {
   final _titleConroller = TextEditingController();
   final _amountConroller = TextEditingController();
   DateTime _choosenDate = DateTime.now();
@@ -113,6 +113,46 @@ class _NewTransactionState extends State<NewTransaction> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class NewTransactionInputModal {
+  static void open(BuildContext context, addNewTransaction) {
+    showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      context: context,
+      isScrollControlled: true,
+      isDismissible: true,
+      builder: (BuildContext bottomSheetContext) {
+        return FractionallySizedBox(
+          heightFactor: 0.8,
+          child: Container(
+            padding: const EdgeInsets.only(top: 24),
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+              ),
+              color: Colors.grey.shade100,
+            ),
+            child: Column(
+              /* mainAxisAlignment: MainAxisAlignment.start, */
+              /* mainAxisSize: MainAxisSize.min, */
+              children: <Widget>[
+                const Text(
+                  'Create New Transaction',
+                  style: TextStyle(fontSize: 22),
+                ),
+                NewTransactionInput(
+                  addNewTransaction: addNewTransaction,
+                  onCloseModalBottomSheet: () => Navigator.pop(context),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

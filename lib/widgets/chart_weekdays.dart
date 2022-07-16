@@ -4,9 +4,13 @@ import 'package:intl/intl.dart';
 import '../models/transaction.dart';
 import './chart_bar.dart';
 
+// List<Transaction> get lastWeekTransactions {
+//   return _userTransactions.where((tx) {
+//     return tx.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
+//   }).toList();
+// }
 class ChartWeekdays extends StatelessWidget {
-  const ChartWeekdays({Key? key, required this.lastWeekTransactions})
-      : super(key: key);
+  const ChartWeekdays({Key? key, required this.lastWeekTransactions}) : super(key: key);
   final List<Transaction> lastWeekTransactions;
 
   List<Map<String, Object>> get groupedTransactionValues {
@@ -23,10 +27,7 @@ class ChartWeekdays extends StatelessWidget {
           }
         }
 
-        return {
-          'day': DateFormat.E().format(weekDay),
-          'totalSpendingOfDay': totalsum
-        };
+        return {'day': DateFormat.E().format(weekDay), 'totalSpendingOfDay': totalsum};
       },
     ).reversed.toList();
   }
@@ -49,10 +50,8 @@ class ChartWeekdays extends StatelessWidget {
             return ChartBar(
                 day: item['day'],
                 amount: item['totalSpendingOfDay'],
-                spendingPercentOfWeek: totalSpendingOfWeek == 0.0
-                    ? 0.0
-                    : (item['totalSpendingOfDay'] as double) /
-                        totalSpendingOfWeek);
+                spendingPercentOfWeek:
+                    totalSpendingOfWeek == 0.0 ? 0.0 : (item['totalSpendingOfDay'] as double) / totalSpendingOfWeek);
           }).toList(),
         ),
       ),

@@ -3,30 +3,6 @@ import 'package:intl/intl.dart';
 
 import '../models/transaction.dart';
 
-class TransactionList extends StatelessWidget {
-  const TransactionList(
-      {Key? key, required this.transactions, required this.onDeleteTransaction})
-      : super(key: key);
-  final List<Transaction> transactions;
-  final Function onDeleteTransaction;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 200,
-      child: ListView.builder(
-        itemBuilder: (ctx, index) {
-          return TransactionListItem(
-            transaction: transactions[index],
-            onDeleteTransaction: onDeleteTransaction,
-          );
-        },
-        itemCount: transactions.length,
-      ),
-    );
-  }
-}
-
 class TransactionListItem extends StatelessWidget {
   TransactionListItem(
       {Key? key, required this.transaction, required this.onDeleteTransaction})
@@ -64,3 +40,4 @@ class TransactionListItem extends StatelessWidget {
     );
   }
 }
+
