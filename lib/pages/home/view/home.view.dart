@@ -18,16 +18,9 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   final List<Transaction> _userTransactions = demoTransactions;
 
-  void _addNewTransaction(String title, double amount, DateTime date) {
-    final newTx = Transaction(
-      id: DateTime.now().toString(),
-      date: date,
-      title: title,
-      amount: amount,
-    );
-
+  void _addNewTransaction(Transaction newTransaction) {
     setState(() {
-      _userTransactions.insert(0, newTx);
+      _userTransactions.insert(0, newTransaction);
     });
   }
 

@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../../shared/ui/ui.dart';
+import '../../../models/models.dart';
+
 class NewTransactionInput extends StatefulWidget {
-  const NewTransactionInput(
-      {Key? key,
-      required this.addNewTransaction,
-      required this.onCloseModalBottomSheet})
-      : super(key: key);
-  final Function addNewTransaction;
+  final Function(Transaction) addNewTransaction;
   final Function onCloseModalBottomSheet;
+  const NewTransactionInput({
+    Key? key,
+    required this.addNewTransaction,
+    required this.onCloseModalBottomSheet,
+  }) : super(key: key);
 
   @override
   State<NewTransactionInput> createState() => _NewTransactionInputState();
 }
 
 class _NewTransactionInputState extends State<NewTransactionInput> {
+  var _transactionType = TransactionDataType.expanse;
   final _titleConroller = TextEditingController();
   final _amountConroller = TextEditingController();
   DateTime _choosenDate = DateTime.now();
@@ -26,7 +30,14 @@ class _NewTransactionInputState extends State<NewTransactionInput> {
     if (title.isEmpty || amount <= 0) {
       return;
     }
-    widget.addNewTransaction(title, amount, _choosenDate);
+    final newTx = Transaction(
+      id: DateTime.now().toString(),
+      title: title,
+      amount: amount,
+      date: _choosenDate,
+      type: _transactionType,
+    );
+    widget.addNewTransaction(newTx);
     widget.onCloseModalBottomSheet();
   }
 
@@ -90,6 +101,12 @@ class _NewTransactionInputState extends State<NewTransactionInput> {
                 onPressed: _onShowDatePicker,
               )
             ],
+          ),
+          const SizedBox(height: 32),
+          CustomSwitch<TransactionDataType>(
+            onSelect: (selected) => _transactionType = selected,
+            optionNames: const ['Expanse', 'Income'],
+            options: const [TransactionDataType.expanse, TransactionDataType.income],
           ),
           const SizedBox(height: 32),
           Center(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../models/transaction.dart';
+import '../../models/models.dart';
 import './chart_bar.dart';
 
 // List<Transaction> get lastWeekTransactions {
