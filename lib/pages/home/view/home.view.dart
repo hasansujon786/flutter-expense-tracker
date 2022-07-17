@@ -7,10 +7,8 @@ import '../../../configs/configs.dart';
 const Color _bg = Colors.blue;
 
 class HomeView extends StatefulWidget {
-  const HomeView({Key? key, required this.title}) : super(key: key);
   final String title;
-
-  static const routeName = '/';
+  const HomeView({Key? key, required this.title}) : super(key: key);
   @override
   State<HomeView> createState() => _HomeViewState();
 }
@@ -44,11 +42,11 @@ class _HomeViewState extends State<HomeView> {
           listItems(),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => NewTransactionInputModal.open(context, _addNewTransaction),
-        tooltip: 'Create transaction',
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () => NewTransactionInputModal.open(context, _addNewTransaction),
+      //   tooltip: 'Create transaction',
+      //   child: const Icon(Icons.add),
+      // ),
     );
   }
 
