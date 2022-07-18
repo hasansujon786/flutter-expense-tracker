@@ -1,38 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../widgets/widgets.dart';
-import '../../../models/models.dart';
 import '../../../configs/configs.dart';
+import '../../../providers/providers.dart';
 
 const Color _bg = Colors.blue;
 
-class HomeView extends StatefulWidget {
+class HomeView extends StatelessWidget {
   final String title;
   const HomeView({Key? key, required this.title}) : super(key: key);
-  @override
-  State<HomeView> createState() => _HomeViewState();
-}
-
-class _HomeViewState extends State<HomeView> {
-  final List<Transaction> _userTransactions = demoTransactions;
-
-  void _addNewTransaction(Transaction newTransaction) {
-    setState(() {
-      _userTransactions.insert(0, newTransaction);
-    });
-  }
-
-  void _deleteTransaction(String id) {
-    setState(() {
-      _userTransactions.removeWhere((tx) => tx.id == id);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    // final media = MediaQuery.of(context);
-    // final screenHeight = media.size.height - appBar.preferredSize.height - media.padding.top;
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
@@ -42,11 +22,6 @@ class _HomeViewState extends State<HomeView> {
           listItems(),
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () => NewTransactionInputModal.open(context, _addNewTransaction),
-      //   tooltip: 'Create transaction',
-      //   child: const Icon(Icons.add),
-      // ),
     );
   }
 
@@ -71,17 +46,22 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  SliverList listItems() {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (context, index) {
-          return TransactionListItem(
-            transaction: _userTransactions[index],
-            onDeleteTransaction: _deleteTransaction,
-          );
-        },
-        childCount: _userTransactions.length,
-      ),
+  Consumer listItems() {
+    return Consumer(
+      builder: (context, ref, child) {
+        var transactions = ref.watch(transactionsProvider);
+        return SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              return TransactionListItem(
+                transaction: transactions[index],
+                onDeleteTransaction: () {},
+              );
+            },
+            childCount: transactions.length,
+          ),
+        );
+      },
     );
   }
 }

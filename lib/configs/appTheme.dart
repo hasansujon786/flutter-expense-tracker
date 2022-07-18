@@ -6,9 +6,9 @@ class AppTheme {
     /* visualDensity: VisualDensity.adaptivePlatformDensity, */
     fontFamily: 'rubik',
     appBarTheme: const AppBarTheme(centerTitle: true),
-    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
       selectedItemColor: Colors.orange,
-      unselectedItemColor: Colors.blueGrey,
+      unselectedItemColor: Colors.grey.shade600,
       backgroundColor: Colors.white,
     ),
     // colorScheme: const ColorScheme.light(),

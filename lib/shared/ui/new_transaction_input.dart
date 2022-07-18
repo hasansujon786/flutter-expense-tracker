@@ -5,13 +5,8 @@ import '../../../shared/ui/ui.dart';
 import '../../../models/models.dart';
 
 class NewTransactionInput extends StatefulWidget {
-  final Function(Transaction) addNewTransaction;
-  final Function onCloseModalBottomSheet;
-  const NewTransactionInput({
-    Key? key,
-    required this.addNewTransaction,
-    required this.onCloseModalBottomSheet,
-  }) : super(key: key);
+  final void Function(Transaction) addNewTransaction;
+  const NewTransactionInput({Key? key, required this.addNewTransaction}) : super(key: key);
 
   @override
   State<NewTransactionInput> createState() => _NewTransactionInputState();
@@ -38,7 +33,6 @@ class _NewTransactionInputState extends State<NewTransactionInput> {
       type: _transactionType,
     );
     widget.addNewTransaction(newTx);
-    widget.onCloseModalBottomSheet();
   }
 
   void _onShowDatePicker() {
@@ -135,7 +129,7 @@ class _NewTransactionInputState extends State<NewTransactionInput> {
 }
 
 class NewTransactionInputModal {
-  static void open(BuildContext context, addNewTransaction) {
+  static void open(BuildContext context, void Function(Transaction) addNewTransaction) {
     showModalBottomSheet(
       backgroundColor: Colors.transparent,
       context: context,
@@ -161,10 +155,7 @@ class NewTransactionInputModal {
                   'Create New Transaction',
                   style: TextStyle(fontSize: 22),
                 ),
-                NewTransactionInput(
-                  addNewTransaction: addNewTransaction,
-                  onCloseModalBottomSheet: () => Navigator.pop(context),
-                ),
+                NewTransactionInput(addNewTransaction: addNewTransaction),
               ],
             ),
           ),

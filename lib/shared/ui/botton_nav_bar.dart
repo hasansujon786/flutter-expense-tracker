@@ -10,11 +10,11 @@ class BottomNavBar extends StatelessWidget {
   final ValueChanged<int> onTabSelected;
   final List<BottomNavBarItem> items;
   final NotchedShape notchedShape;
-  final String centerItemText;
   final double height;
   final double iconSize;
   final double iconFontSize;
   final int selectedIndex;
+  final Color? backgroundColor;
 
   const BottomNavBar({
     Key? key,
@@ -22,9 +22,9 @@ class BottomNavBar extends StatelessWidget {
     this.iconSize = 24.0,
     this.iconFontSize = 12,
     this.notchedShape = const CircularNotchedRectangle(),
+    this.backgroundColor,
     required this.items,
     required this.onTabSelected,
-    required this.centerItemText,
     required this.selectedIndex,
   })  : assert(items.length == 2 || items.length == 4),
         super(key: key);
@@ -56,7 +56,7 @@ class BottomNavBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: navItems,
       ),
-      color: navbarTheme.backgroundColor,
+      color: backgroundColor ?? navbarTheme.backgroundColor,
     );
   }
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../configs/configs.dart';
+import '../providers/providers.dart';
 import '../shared/ui/ui.dart';
 import 'home/home.dart';
 
@@ -24,18 +26,24 @@ class _RootNavigationState extends State<RootNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: _currentViewIndex == 0 ? Colors.white : null,
         body: _screens.elementAt(_currentViewIndex),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: FloatingActionButton(
-          // onPressed: () => NewTransactionInputModal.open(context, _addNewTransaction),
-          onPressed: () {},
-          tooltip: 'Create transaction',
-          child: const Icon(Icons.add),
+        floatingActionButton: Consumer(
+          builder: (context, ref, child) => FloatingActionButton(
+            onPressed: () {
+              NewTransactionInputModal.open(context, (newTransaction) {
+                ref.read(transactionsProvider.notifier).addNewTransaction(newTransaction);
+                Navigator.pop(context);
+              });
+            },
+            tooltip: 'Create transaction',
+            child: const Icon(Icons.add),
+          ),
         ),
         bottomNavigationBar: BottomNavBar(
           selectedIndex: _currentViewIndex,
           onTabSelected: (index) => setState(() => _currentViewIndex = index),
-          centerItemText: '',
           iconFontSize: 10,
           items: [
             BottomNavBarItem(icon: Icons.home_outlined, text: 'Home'),
