@@ -8,12 +8,22 @@ class Transaction {
   TransactionDataType type;
 
   Transaction({
-    required this.id,
+    this.id = '',
     required this.title,
     required this.amount,
     required this.date,
     this.type = TransactionDataType.income,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'amount': amount,
+      'date': date,
+      'type': type,
+    };
+  }
 }
 
 final List<Transaction> demoTransactions = [
