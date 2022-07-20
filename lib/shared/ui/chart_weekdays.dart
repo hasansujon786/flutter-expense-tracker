@@ -11,7 +11,7 @@ import './chart_bar.dart';
 // }
 class ChartWeekdays extends StatelessWidget {
   const ChartWeekdays({Key? key, required this.lastWeekTransactions}) : super(key: key);
-  final List<Transaction> lastWeekTransactions;
+  final List<MyTransaction> lastWeekTransactions;
 
   List<Map<String, Object>> get groupedTransactionValues {
     return List.generate(
@@ -20,9 +20,9 @@ class ChartWeekdays extends StatelessWidget {
         final weekDay = DateTime.now().subtract(Duration(days: index));
         double totalsum = 0.0;
         for (var i = 0; i < lastWeekTransactions.length; i++) {
-          if (lastWeekTransactions[i].date.day == weekDay.day &&
-              lastWeekTransactions[i].date.month == weekDay.month &&
-              lastWeekTransactions[i].date.year == weekDay.year) {
+          if (lastWeekTransactions[i].createdAt.day == weekDay.day &&
+              lastWeekTransactions[i].createdAt.month == weekDay.month &&
+              lastWeekTransactions[i].createdAt.year == weekDay.year) {
             totalsum += lastWeekTransactions[i].amount;
           }
         }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../widgets/widgets.dart';
 import '../../../configs/configs.dart';
-import '../../../providers/providers.dart';
+import '../../../models/models.dart';
+import '../../../pages/pages.dart';
+import '../../../services/firebase/fbase.dart';
+import '../widgets/widgets.dart';
 
 const Color _bg = Colors.blue;
 
@@ -18,7 +19,7 @@ class HomeView extends StatelessWidget {
       body: CustomScrollView(
         slivers: <Widget>[
           sliverAppbar(),
-          const ListTopRCorner(),
+          const _ListTopRCorner(),
           listItems(),
         ],
       ),
@@ -46,30 +47,47 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Consumer listItems() {
-    return Consumer(
-      builder: (context, ref, child) {
-        var transactions = ref.watch(transactionsProvider);
-        return SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              return TransactionListItem(
+  Widget listItems() {
+    return StreamBuilder(
+      stream: readTransactions(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasError) return buildSliverBoxCenter(Text('Error: ${snapshot.error.toString()}'));
+        if (snapshot.connectionState == ConnectionState.waiting) return buildSliverBoxCenter(const Text('Loading...'));
+
+        final List<MyTransaction> transactions = snapshot.data;
+        if (snapshot.hasData && transactions.isNotEmpty) {
+          return SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) => TransactionListItem(
                 transaction: transactions[index],
-                onDeleteTransaction: () {},
-              );
-            },
-            childCount: transactions.length,
-          ),
-        );
+                onTap: () {
+                  Navigator.of(context).pushNamed(
+                    TransactionDetailsView.routeName,
+                    arguments: transactions[index],
+                  );
+                },
+              ),
+              childCount: transactions.length,
+            ),
+          );
+        }
+        return buildSliverBoxCenter(const Text('No Data'));
       },
+    );
+  }
+
+  SliverToBoxAdapter buildSliverBoxCenter(Widget child) {
+    return SliverToBoxAdapter(
+      child: SizedBox(
+        height: 100,
+        child: Center(child: child),
+      ),
     );
   }
 }
 
-class ListTopRCorner extends StatelessWidget {
-  const ListTopRCorner({
-    Key? key,
-  }) : super(key: key);
+class _ListTopRCorner extends StatelessWidget {
+  const _ListTopRCorner({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

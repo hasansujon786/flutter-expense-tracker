@@ -5,7 +5,7 @@ import '../../../shared/ui/ui.dart';
 import '../../../models/models.dart';
 
 class NewTransactionInput extends StatefulWidget {
-  final void Function(Transaction) addNewTransaction;
+  final void Function(MyTransaction) addNewTransaction;
   const NewTransactionInput({Key? key, required this.addNewTransaction}) : super(key: key);
 
   @override
@@ -13,9 +13,10 @@ class NewTransactionInput extends StatefulWidget {
 }
 
 class _NewTransactionInputState extends State<NewTransactionInput> {
-  var _transactionType = TransactionDataType.expanse;
-  final _titleConroller = TextEditingController();
-  final _amountConroller = TextEditingController();
+  final _titleConroller = TextEditingController(text: 'Title text');
+  final _amountConroller = TextEditingController(text: '234');
+
+  var _transactionType = MyTransactionDataType.expanse;
   DateTime _choosenDate = DateTime.now();
 
   void _onSubmitData() {
@@ -25,11 +26,10 @@ class _NewTransactionInputState extends State<NewTransactionInput> {
     if (title.isEmpty || amount <= 0) {
       return;
     }
-    final newTx = Transaction(
-      id: DateTime.now().toString(),
+    final newTx = MyTransaction(
       title: title,
       amount: amount,
-      date: _choosenDate,
+      createdAt: _choosenDate,
       type: _transactionType,
     );
     widget.addNewTransaction(newTx);
@@ -97,10 +97,10 @@ class _NewTransactionInputState extends State<NewTransactionInput> {
             ],
           ),
           const SizedBox(height: 32),
-          CustomSwitch<TransactionDataType>(
+          CustomSwitch<MyTransactionDataType>(
             onSelect: (selected) => _transactionType = selected,
             optionNames: const ['Expanse', 'Income'],
-            options: const [TransactionDataType.expanse, TransactionDataType.income],
+            options: const [MyTransactionDataType.expanse, MyTransactionDataType.income],
           ),
           const SizedBox(height: 32),
           Center(
@@ -129,7 +129,7 @@ class _NewTransactionInputState extends State<NewTransactionInput> {
 }
 
 class NewTransactionInputModal {
-  static void open(BuildContext context, void Function(Transaction) addNewTransaction) {
+  static void open(BuildContext context, void Function(MyTransaction) addNewTransaction) {
     showModalBottomSheet(
       backgroundColor: Colors.transparent,
       context: context,

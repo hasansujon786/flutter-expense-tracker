@@ -2,15 +2,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/models.dart';
 
-final transactionsProvider = StateNotifierProvider<TransactionsProvider, List<Transaction>>((ref) {
+final transactionsProvider = StateNotifierProvider<TransactionsProvider, List<MyTransaction>>((ref) {
   return TransactionsProvider(ref, demoTransactions);
 });
 
-class TransactionsProvider extends StateNotifier<List<Transaction>> {
+class TransactionsProvider extends StateNotifier<List<MyTransaction>> {
   final Ref ref;
-  TransactionsProvider(this.ref, [List<Transaction>? state]) : super(state ?? <Transaction>[]);
+  TransactionsProvider(this.ref, [List<MyTransaction>? state]) : super(state ?? <MyTransaction>[]);
 
-  void addNewTransaction(Transaction newTransaction) {
+  void addNewTransaction(MyTransaction newTransaction) {
     state = [newTransaction, ...state];
   }
 

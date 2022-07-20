@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../models/models.dart';
-import '../../../pages/pages.dart';
 import '../../../configs/configs.dart';
+import '../../../models/models.dart';
 
 class TransactionListItem extends StatelessWidget {
+  final MyTransaction transaction;
+  final VoidCallback onTap;
+  final dateFormater = DateFormat().add_yMMMd();
   TransactionListItem({
     Key? key,
     required this.transaction,
-    required this.onDeleteTransaction,
+    required this.onTap,
   }) : super(key: key);
-  final Transaction transaction;
-  final Function onDeleteTransaction;
-  final dateFormater = DateFormat().add_yMMMd();
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () => Navigator.of(context).pushNamed(TransactionDetailsView.routeName),
+      onTap: onTap,
       horizontalTitleGap: 8,
       leading: leading(context),
       title: Text(
@@ -26,11 +25,11 @@ class TransactionListItem extends StatelessWidget {
         style: TextStyle(color: Palette.text),
       ),
       subtitle: Text(
-        dateFormater.format(transaction.date),
+        dateFormater.format(transaction.createdAt),
         style: Theme.of(context).textTheme.caption,
       ),
       trailing: Text(
-        '${transaction.type == TransactionDataType.income ? '+' : '-'} \$ ${transaction.amount}',
+        '${transaction.type == MyTransactionDataType.income ? '+' : '-'} \$ ${transaction.amount}',
         style: TextStyle(color: Palette.text, fontWeight: FontWeight.w500),
       ),
       // trailing: IconButton(

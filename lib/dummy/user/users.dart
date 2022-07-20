@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'user.dart';
 
 import 'firebase.dart' as fbase;
+import 'user.dart';
 
 class UsersView extends StatefulWidget {
   final String title;
@@ -31,12 +31,12 @@ class _UsersViewState extends State<UsersView> {
                   if (snapshot.hasError) {
                     return Center(child: Text(snapshot.error.toString()));
                   }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
                   if (snapshot.hasData) {
                     final List<User> users = snapshot.data;
                     return ListView(children: users.map(buildUser).toList());
-                  }
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
                   }
                   return const Center(child: Text('no data'));
                 },

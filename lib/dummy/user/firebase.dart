@@ -22,7 +22,7 @@ Stream<List<User>> readUsers() {
       .map((snapshot) => snapshot.docs.map((doc) => User.fromJson(doc.data())).toList());
 }
 
-Stream<User> readUsersStream(String id) {
+Stream<User> readSingleUserStream(String id) {
   final userDoc = FirebaseFirestore.instance.collection('users').doc(id);
   final snapshot = userDoc.snapshots();
   return snapshot.map((doc) => User.fromJson(doc.data()!));

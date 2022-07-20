@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../dummy/user/user.dart';
+import '../../../services/firebase/fbase.dart';
 import '../configs/configs.dart';
-import '../providers/providers.dart';
 import '../shared/ui/ui.dart';
 import 'home/home.dart';
 
@@ -19,7 +20,7 @@ class _RootNavigationState extends State<RootNavigation> {
     HomeView(title: Constants.appName),
     TestView(title: 'one'),
     TestView(title: 'two'),
-    TestView(title: 'three'),
+    UsersView(title: 'Users'),
   ];
 
   int _currentViewIndex = 0;
@@ -33,7 +34,8 @@ class _RootNavigationState extends State<RootNavigation> {
           builder: (context, ref, child) => FloatingActionButton(
             onPressed: () {
               NewTransactionInputModal.open(context, (newTransaction) {
-                ref.read(transactionsProvider.notifier).addNewTransaction(newTransaction);
+                // ref.read(transactionsProvider.notifier).addNewTransaction(newTransaction);
+                createTransaction(newTransaction);
                 Navigator.pop(context);
               });
             },
